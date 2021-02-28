@@ -1,0 +1,6 @@
+MatematikaIA.
+MatematikaIIA,MatematikaIA.
+Olahraga.
+MatematikaDiskrit,MatematikaIIA.
+Probstat,MatematikaDiskrit.
+Kriptografi,MatematikaDiskrit.

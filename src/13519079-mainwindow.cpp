@@ -5,6 +5,7 @@
 
 using namespace std;
 
+//Mengubah angka desimal menjadi huruf romawi
 string romanNumeralsEncoder(int n){
     int val[13] = {1000,900,500,400,100,90,50,40,10,9,5,4,1};
     string sym[13] = {"M","CM","D","CD","C","XC","L","XL","X","IX","V","IV","I"};
@@ -18,6 +19,7 @@ string romanNumeralsEncoder(int n){
     return roman;
 }
 
+//Mendapatkan index dari sebuah vektor yang elemennya = isi dari course, fungsi mereturn -1 jika tidak ditemukan
 int getIndex(vector<string> v, string course){
     for(int i=0;i<v.size();i++){
         if(course==v[i]){
@@ -27,6 +29,7 @@ int getIndex(vector<string> v, string course){
     return -1;
 }
 
+//Mendapatkan index node dengan edge masuk = 0
 int findNodeZero(bool **DAG,int n){
     for(int i=0;i<n;i++){
         for(int j=0;j<n;j++){
@@ -40,6 +43,7 @@ int findNodeZero(bool **DAG,int n){
     return -1;
 }
 
+
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
@@ -47,18 +51,21 @@ MainWindow::MainWindow(QWidget *parent)
     ui->setupUi(this);
 }
 
+//Destruktor object MainWindow
 MainWindow::~MainWindow()
 {
     delete ui;
 }
 
 
+//Event Listener ketika tombol Choose File ditekan
 void MainWindow::on_pushButton_clicked()
 {
-    QString filename = QFileDialog::getOpenFileName(this, "Open a file", "C://");
+    QString filename = QFileDialog::getOpenFileName(this, "Open a file", "C://"); //Melakukan pemanggilan syscall untuk FileDialog
     QScrollBar *sBar = new QScrollBar();
     QTextCursor cursor = ui->textEdit->textCursor();
     ui->textEdit->setVerticalScrollBar(sBar);
+    //Memberi scrollbar untuk bagian text edit
     fstream courses_file;
 
     vector<string> courses;
@@ -112,6 +119,7 @@ void MainWindow::on_pushButton_clicked()
 
         DAG.topologicalsort(reversedplan,courses);
 
+        //Melakukan pencetakan isi stack
         while(reversedplan.size()){
             plan.push(reversedplan.top());
             reversedplan.pop();

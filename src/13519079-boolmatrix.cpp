@@ -1,5 +1,6 @@
 #include "boolmatrix.h"
 
+//Konstruktor BoolMatrix
 BoolMatrix::BoolMatrix(int size){
     this->size=size;
     bool **DAG = new bool*[size];
@@ -19,6 +20,7 @@ int BoolMatrix::getSize(){
     return this->size;
 }
 
+//Menghapus node pada graf sekaligus menghapus edge yang keluar dari node tersebut
 void BoolMatrix::removeNode(int n){
     bool **decreasedDAG = new bool*[this->size-1];
     for(int i = 0; i < this->size-1; ++i){
@@ -46,10 +48,10 @@ void BoolMatrix::removeNode(int n){
     this->size -=1;
 }
 
+//Mengambil index node-node yang memiliki derajat simpul masuk = 0
 vector<int> BoolMatrix::getNodes(){
     bool found;
     vector<int> nodes;
-    cout << "Get nodes called with this matrix: " << endl;
     for(int i=0;i<this->size;i++){
         found = true;
         for(int j=0;j<this->size;j++){
@@ -64,38 +66,29 @@ vector<int> BoolMatrix::getNodes(){
     return nodes;
 }
 
+//Method untuk melakukan sorting dan memasukkan hasil ke dalam Stack S secara rekursif
 void BoolMatrix::topologicalsort(stack<vector<string>> &S,vector<string> &C){
     vector<int> nodes = this->getNodes();
     vector<string> courseplan;
-    cout << "Topological sort called" << endl;
     if(this->size==0){
-        cout << "Topological sort finished" << endl;
         return;
     } else{
-        cout << "Node zeroes : ";
         for(int i=0;i<nodes.size();i++){
             cout << nodes[i] << " ";
             courseplan.push_back(C[nodes[i]]);
         }
-        cout << endl;
         S.push(courseplan);
         while(nodes.size()>0){
             int temp = nodes[0];
-            cout << "Nodes[0] : " << nodes[0] << endl;
             this->removeNode(nodes[0]);
             for(int i=0;i<nodes.size();i++){
                 if(nodes[i]>temp){
                     nodes[i] = nodes[i] - 1;
                 }
             }
-            cout << "Deleting " << C[nodes[0]] << " with index " << nodes[0] <<endl;
             C.erase(C.begin()+nodes[0]);
             nodes.erase(nodes.begin());
         }
-        // cout << "Current remaining courses: " << endl;
-        // for(int i=0;i<C.size();i++){
-        //     cout << i << " : " << C[i] << endl;
-        // }
         this->topologicalsort(S,C);
     }
 }
