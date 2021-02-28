@@ -124,6 +124,7 @@ void MainWindow::on_pushButton_clicked()
             for(int i=0;i<plan.top().size();i++){
                 ui->textEdit->append(QString::fromStdString(plan.top()[i]));
             }
+            ui->textEdit->append("==================================================");
             plan.pop();
             x++;
         }
